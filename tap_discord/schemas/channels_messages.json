@@ -14,12 +14,27 @@
         "author": {
            "type": ["null", "object"],
            "additionalProperties": true,
-           "properties": {}
+           "properties": {
+              "id": {
+                "type": ["null", "string"]
+              },
+              "username": {
+                "type": ["null", "string"]
+              },
+              "email": {
+                "type": ["null", "string"]
+              }
+           }
         },
         "member": {
            "type": ["null", "object"],
            "additionalProperties": true,
-           "properties": {}
+           "properties": {
+             "id": {"type": ["null", "string"]},
+             "user_id": {"type": ["null", "string"]},
+             "join_timestamp": {"type": ["null", "string"], "format": "date-time"},
+             "flags": {"type": ["null", "integer"]}
+           }
         },
         "content":{
             "type":["null", "string"]
@@ -55,7 +70,12 @@
               "items": {
                   "type": ["null", "object"],
                   "additionalProperties": true,
-                  "properties": {}
+                  "properties": {
+                     "id": {"type": ["null", "string"]},
+                     "guild_id": {"type": ["null", "string"]},
+                     "type": {"type": ["null", "integer"]},
+                     "name": {"type": ["null", "string"]}
+                 }
               }
         },
         "attachments": {
@@ -63,7 +83,18 @@
               "items": {
                   "type": ["null", "object"],
                   "additionalProperties": true,
-                  "properties": {}
+                  "properties": {
+                    "id": {"type": ["null", "string"]},
+                    "filename": {"type": ["null", "string"]},
+                    "description": {"type": ["null", "string"]},
+                    "content_type": {"type": ["null", "string"]},
+                    "size": {"type": ["null", "integer"]},
+                    "url": {"type": ["null", "string"]},
+                    "proxy_url": {"type": ["null", "string"]},
+                    "height": {"type": ["null", "integer"]},
+                    "width": {"type": ["null", "integer"]},
+                    "ephemeral": {"type": ["null", "boolean"]}
+                  }
               }
         },
         "embeds": {
@@ -71,7 +102,21 @@
               "items": {
                   "type": ["null", "object"],
                   "additionalProperties": true,
-                  "properties": {}
+                  "properties": {
+                    "title": {"type": ["null", "string"]},
+                    "type": {"type": ["null", "string"]},
+                    "description": {"type": ["null", "string"]},
+                    "url": {"type": ["null", "string"]},
+                    "timestamp": {"type": ["null", "string"], "format": "date-time"},
+                    "color": {"type": ["null", "integer"]},
+                    "footer": {"type": ["null", "string"]},
+                    "image": {"type": ["null", "string"]},
+                    "thumbnail": {"type": ["null", "string"]},
+                    "video": {"type": ["null", "string"]},
+                    "provider": {"type": ["null", "string"]},
+                    "author": {"type": ["null", "string"]},
+                    "fields": {"type": ["null", "string"]}
+                  }
               }
         },
         "reactions": {
@@ -79,7 +124,11 @@
               "items": {
                   "type": ["null", "object"],
                   "additionalProperties": true,
-                  "properties": {}
+                  "properties": {
+                     "count": {"type": ["null", "integer"]},
+                     "me": {"type": ["null", "boolean"]},
+                     "emoji": {"type": ["null", "string"]}
+                  }
               }
         },
         "nonce":{
@@ -97,12 +146,13 @@
         "activity": {
             "type": ["null", "object"],
             "additionalProperties": true,
-            "properties": {}
+            "properties": {
+               "type": {"type": ["null", "integer"]},
+               "party_id": {"type": ["null", "string"]}
+            }
         },
         "application": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {}
+            "type": ["null", "string"]
         },
         "application_id":{
             "type":["null", "string"]
@@ -110,32 +160,59 @@
         "message_reference": {
             "type": ["null", "object"],
             "additionalProperties": true,
-            "properties": {}
+            "properties": {
+               "message_id": {"type": ["null", "string"]},
+               "channel_id": {"type": ["null", "string"]},
+               "guild_id": {"type": ["null", "string"]},
+               "fail_if_not_exists": {"type": ["null", "boolean"]}
+            }
         },
         "flags":{
             "type":["null", "integer"]
         },
         "referenced_message": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {}
+            "type": ["null", "string"]
         },
         "interaction": {
             "type": ["null", "object"],
             "additionalProperties": true,
-            "properties": {}
+            "properties": {
+               "id": {"type": ["null", "string"]},
+               "type": {"type": ["null", "string"]},
+               "name": {"type": ["null", "string"]},
+               "user": {"type": ["null", "string"]},
+               "member": {"type": ["null", "string"]}
+            }
         },
         "thread": {
             "type": ["null", "object"],
             "additionalProperties": true,
-            "properties": {}
+            "properties": {
+               "id": {"type": ["null", "string"]},
+               "type": {"type": ["null", "integer"]},
+               "name": {"type": ["null", "string"]},
+               "guild_id": {"type": ["null", "string"]}
+            }
         },
         "components": {
            "type": ["null", "array"],
               "items": {
                   "type": ["null", "object"],
                   "additionalProperties": true,
-                  "properties": {}
+                  "properties": {
+                    "type": {"type": ["null", "integer"]},
+                    "custom_id": {"type": ["null", "string"]},
+                    "disabled": {"type": ["null", "boolean"]},
+                    "style": {"type": ["null", "integer"]},
+                    "label": {"type": ["null", "string"]},
+                    "emoji": {"type": ["null", "string"]},
+                    "url": {"type": ["null", "string"]},
+                    "options": {"type": ["null", "string"]},
+                    "placeholder": {"type": ["null", "string"]},
+                    "min_values": {"type": ["null", "integer"]},
+                    "max_values": {"type": ["null", "integer"]},
+                    "components": {"type": ["null", "string"]}
+                  }
               }
         },
         "sticker_items": {
@@ -143,7 +220,11 @@
               "items": {
                   "type": ["null", "object"],
                   "additionalProperties": true,
-                  "properties": {}
+                  "properties": {
+                     "id": {"type": ["null", "string"]},
+                     "format_type": {"type": ["null", "integer"]},
+                     "name": {"type": ["null", "string"]}
+                  }
               }
         },
         "stickers": {
@@ -151,7 +232,20 @@
               "items": {
                   "type": ["null", "object"],
                   "additionalProperties": true,
-                  "properties": {}
+                  "properties": {
+                        "id": {"type": ["null", "string"]},
+                        "pack_id": {"type": ["null", "string"]},
+                        "name": {"type": ["null", "string"]},
+                        "description": {"type": ["null", "string"]},
+                        "tags": {"type": ["null", "string"]},
+                        "asset": {"type": ["null", "string"]},
+                        "type": {"type": ["null", "integer"]},
+                        "format_type": {"type": ["null", "integer"]},
+                        "available": {"type": ["null", "boolean"]},
+                        "guild_id": {"type": ["null", "string"]},
+                        "user": {"type": ["null", "string"]},
+                        "sort_value": {"type": ["null", "integer"]}
+                  }
               }
         }
     }

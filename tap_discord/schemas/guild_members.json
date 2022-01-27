@@ -8,7 +8,17 @@
         "user": {
            "type": ["null", "object"],
            "additionalProperties": true,
-           "properties": {}
+           "properties": {
+              "id": {
+                "type": ["null", "string"]
+              },
+              "username": {
+                "type": ["null", "string"]
+              },
+              "email": {
+                "type": ["null", "string"]
+              }
+            }
         },
         "nick":{
             "type":["null", "string"]

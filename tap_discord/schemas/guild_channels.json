@@ -19,7 +19,11 @@
               "items": {
                   "type": ["null", "object"],
                   "additionalProperties": true,
-                  "properties": {}
+                  "properties": {
+                     "id": {"type": ["null", "string"]},
+                     "type": {"type": ["null", "integer"]},
+                     "allow": {"type": ["null", "string"]},
+                     "deny": {"type": ["null", "string"]}}
               }
        },
        "name":{
@@ -48,7 +52,17 @@
               "items": {
                   "type": ["null", "object"],
                   "additionalProperties": true,
-                  "properties": {}
+                  "properties": {
+                      "id": {
+                        "type": ["null", "string"]
+                      },
+                      "username": {
+                        "type": ["null", "string"]
+                      },
+                      "email": {
+                        "type": ["null", "string"]
+                      }
+                  }
               }
        },
        "icon":{
@@ -82,12 +96,24 @@
        "thread_metadata": {
            "type": ["null", "object"],
            "additionalProperties": true,
-           "properties": {}
+           "properties": {
+             "archived": {"type": ["null", "boolean"]},
+             "auto_archive_duration": {"type": ["null", "integer"]},
+             "archive_timestamp": {"type": ["null", "string"], "format": "date-time"},
+             "locked": {"type": ["null", "boolean"]},
+             "invitable": {"type": ["null", "boolean"]},
+             "create_timestamp": {"type": ["null", "string"], "format": "date-time"}
+           }
        },
        "member": {
            "type": ["null", "object"],
            "additionalProperties": true,
-           "properties": {}
+           "properties": {
+             "id": {"type": ["null", "string"]},
+             "user_id": {"type": ["null", "string"]},
+             "join_timestamp": {"type": ["null", "string"], "format": "date-time"},
+             "flags": {"type": ["null", "integer"]}
+           }
        },
        "default_auto_archive_duration":{
           "type":["null", "integer"]
