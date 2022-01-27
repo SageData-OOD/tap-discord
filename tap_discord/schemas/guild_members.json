@@ -36,7 +36,7 @@
         "mute":{
             "type":["null", "boolean"]
         },
-        "pending":{
+        "is_pending":{
             "type":["null", "boolean"]
         },
         "permissions":{

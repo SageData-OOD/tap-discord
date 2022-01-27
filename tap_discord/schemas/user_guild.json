@@ -38,40 +38,40 @@
           "emojis": {
               "type": ["null", "array"],
               "items": {
-              "type": ["null", "object"],
-              "properties": {
+                "type": ["null", "object"],
                 "additionalProperties": false,
-                "id": {
-                  "type": ["null", "string"]
-                },
-                "name": {
-                  "type": ["null", "string"]
-                },
-                "roles": {
-                  "type": ["null", "array"],
-                  "items": {
-                      "type": ["null", "string"]
+                "properties": {
+                  "id": {
+                    "type": ["null", "string"]
+                  },
+                  "name": {
+                    "type": ["null", "string"]
+                  },
+                  "roles": {
+                    "type": ["null", "array"],
+                    "items": {
+                        "type": ["null", "string"]
+                    }
+                  },
+                  "user": {
+                    "type": ["null", "object"],
+                    "additionalProperties": true,
+                    "properties": {}
+                  },
+                  "require_colons": {
+                    "type": ["null", "boolean"]
+                  },
+                  "managed": {
+                    "type": ["null", "boolean"]
+                  },
+                  "animated": {
+                    "type": ["null", "boolean"]
+                  },
+                  "available": {
+                    "type": ["null", "boolean"]
                   }
-                },
-                "user": {
-                  "type": ["null", "object"],
-                  "additionalProperties": true,
-                  "properties": {}
-                },
-                "require_colons": {
-                  "type": ["null", "boolean"]
-                },
-                "managed": {
-                  "type": ["null", "boolean"]
-                },
-                "animated": {
-                  "type": ["null", "boolean"]
-                },
-                "available": {
-                  "type": ["null", "boolean"]
                 }
               }
-          }
           },
           "banner": {
               "type": ["null", "string"]
@@ -109,9 +109,9 @@
           "roles": {
               "type": ["null", "array"],
               "items": {
-              "type": ["null", "object"],
-              "properties": {
+                "type": ["null", "object"],
                 "additionalProperties": false,
+                "properties": {
                 "id": {
                   "type": ["null", "string"]
                 },

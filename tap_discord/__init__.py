@@ -10,7 +10,7 @@ from singer.catalog import Catalog, CatalogEntry
 from singer.schema import Schema
 from singer.transform import transform
 
-REQUIRED_CONFIG_KEYS = ["starts_at", "guild_id", "bot_token", "refresh_token", "client_id", "client_secret"]
+REQUIRED_CONFIG_KEYS = ["start_date", "guild_id", "bot_token", "refresh_token", "client_id", "client_secret"]
 LOGGER = singer.get_logger()
 HOST = "https://discord.com"
 PATH = "/api/v8"
@@ -18,12 +18,15 @@ END_POINTS = {
     "refresh_token": "/oauth2/token",
     "user_guild": "/guilds/{guild_id}?with_counts=true",
     "guild_channels": "/guilds/{guild_id}/channels",
-    "guild_members": "/guilds/{guild_id}/members?limit=500",
+    "guild_members": "/guilds/{guild_id}/members",
     "channels_messages": "/channels/{channel_id}/messages"
 }
 
 FULL_TABLE_SYNC_STREAMS = ["user_guild", "guild_channels"]
 INCREMENTAL_SYNC_STREAMS = ["guild_members", "channels_messages"]
+
+# Milliseconds since Discord Epoch, the first second of 2015 -> 1420070400000.
+# More details: https://discord.com/developers/docs/reference#snowflakes
 DISCORD_EPOCH = 1420070400000
 
 
@@ -34,12 +37,16 @@ class DiscordRateLimitError(Exception):
 
 
 def snowflake_time(id):
-    """ Discord snowflake ID to datetime(str) conversion """
+    """ Discord snowflake ID to datetime(str) conversion
+        More details: https://discord.com/developers/docs/reference#snowflakes
+    """
     return str(datetime.utcfromtimestamp(((id >> 22) + DISCORD_EPOCH) / 1000))
 
 
 def time_snowflake(datetime_obj, high=False):
-    """Returns a numeric snowflake pretending to be created at the given date."""
+    """Returns a numeric snowflake pretending to be created at the given date.
+       More details: https://discord.com/developers/docs/reference#snowflakes
+    """
 
     unix_seconds = (datetime_obj - type(datetime_obj)(1970, 1, 1)).total_seconds()
     discord_millis = int(unix_seconds * 1000 - DISCORD_EPOCH)
@@ -49,17 +56,15 @@ def time_snowflake(datetime_obj, high=False):
 
 
 def _refresh_token(config):
-    # headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-    # data = {
-    #     'grant_type': 'refresh_token',
-    #     'refresh_token': config['refresh_token']
-    # }
-    # url = HOST + PATH + END_POINTS["refresh_token"]
-    # response = requests.post(url, headers=headers, data=data,
-    #                          auth=(config["client_id"], config['client_secret']))
-    # return response.json()
-
-    return {'access_token': 'OyC54wCD4voMdXGMBafNxlGVC7vyLU', 'expires_in': 604800, 'refresh_token': 'mSd2qf5CJIqNZ3FjG5UFFqfO8xte0s', 'scope': 'guilds messages.read gdm.join rpc connections email guilds.members.read identify guilds.join', 'token_type': 'Bearer'}
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    data = {
+        'grant_type': 'refresh_token',
+        'refresh_token': config['refresh_token']
+    }
+    url = HOST + PATH + END_POINTS["refresh_token"]
+    response = requests.post(url, headers=headers, data=data,
+                             auth=(config["client_id"], config['client_secret']))
+    return response.json()
 
 
 def refresh_access_token_if_expired(config):
@@ -75,6 +80,10 @@ def refresh_access_token_if_expired(config):
 
 def get_key_properties(stream_id):
     return ["id"]
+
+
+def get_bookmark(stream_id):
+    return "id"
 
 
 def get_abs_path(path):
@@ -93,6 +102,7 @@ def load_schemas():
 
 
 def create_metadata_for_report(stream_id, schema, key_properties):
+    replication_key = get_bookmark(stream_id)
     mdata = [{"breadcrumb": [], "metadata": {"inclusion": "available", "forced-replication-method": "FULL_TABLE"}}]
 
     if key_properties:
@@ -100,7 +110,7 @@ def create_metadata_for_report(stream_id, schema, key_properties):
 
     if stream_id in INCREMENTAL_SYNC_STREAMS:
         mdata[0]["metadata"]["forced-replication-method"] = "INCREMENTAL"
-        mdata[0]["metadata"]["valid-replication-keys"] = ["date"]
+        mdata[0]["metadata"]["valid-replication-keys"] = [replication_key]
 
     for key in schema.properties:
         # hence, when property is object, we will only consider properties of that object without taking object itself.
@@ -141,8 +151,13 @@ def request_data(config, attr, headers, endpoint, channel_id=None):
     if attr:
         url += "?" + "&".join([f"{k}={v}" for k, v in attr.items()])
 
-    if refresh_access_token_if_expired(config) or not headers:
-        headers.update({'Authorization': f'bearer {config["access_token"]}'})
+    # # We are not using access_token for now, if we want to use access_token then also we have to print_metrics
+    # # in order to save new refresh_token to S3, after refreshing the access_token each time.
+    # if refresh_access_token_if_expired(config) or not headers:
+    #     headers.update({'Authorization': f'Bearer {config["access_token"]}'})
+
+    if not headers:
+        headers.update({'Authorization': f'Bot {config["bot_token"]}'})
 
     response = requests.get(url, headers=headers)
     if response.status_code == 429:
@@ -150,11 +165,17 @@ def request_data(config, attr, headers, endpoint, channel_id=None):
     elif response.status_code != 200:
         raise Exception(response.text)
     data = response.json()
-    return data
+    return [data] if isinstance(data, dict) else data
+
+
+def get_list_channel_ids(config):
+    endpoint = END_POINTS["guild_channels"]
+    channels = request_data(config, {}, {}, endpoint)
+    return [c["id"] for c in channels]
 
 
 def sync_incremental(config, state, stream):
-    bookmark_column = "id"
+    bookmark_column = get_bookmark(stream.tap_stream_id)
     mdata = metadata.to_map(stream.metadata)
     schema = stream.schema.to_dict()
 
@@ -166,34 +187,62 @@ def sync_incremental(config, state, stream):
     endpoint = END_POINTS[stream.tap_stream_id]
     headers = dict()
     attr = {"limit": 100} if stream.tap_stream_id == "guild_members" else {}
-    starts_id = singer.get_bookmark(state, stream.tap_stream_id, bookmark_column).split(" ")[0] \
-        if state.get("bookmarks", {}).get(stream.tap_stream_id) else time_snowflake(datetime.strptime(config["starts_at"], "%Y-%m-%d"))
+    start_id = singer.get_bookmark(state, stream.tap_stream_id, bookmark_column) \
+        if state.get("bookmarks", {}).get(stream.tap_stream_id) \
+        else time_snowflake(datetime.strptime(config["start_date"], "%Y-%m-%d"))
 
-    bookmark = starts_id
-    while True:
-        attr["after"] = bookmark
-        LOGGER.info("Querying Date --> %s", snowflake_time(bookmark))
-        tap_data = request_data(config, attr, headers, endpoint)
+    if stream.tap_stream_id == "channels_messages":
+        channel_ids = get_list_channel_ids(config)
+        current_datetime_before_fetch_messages = datetime.utcnow()
+        for cid in channel_ids:
+            bookmark = start_id
+            while True:
+                attr["after"] = bookmark
+                LOGGER.info("Channel_id --> %s :: Querying Date --> %s", cid, snowflake_time(bookmark))
+                tap_data = request_data(config, attr, headers, endpoint, channel_id=cid)
 
-        with singer.metrics.record_counter(stream.tap_stream_id) as counter:
-            for row in tap_data:
-                # Type Conversation and Transformation
-                if stream.tap_stream_id == "guild_members":
-                    row["id"] = row.get("user", {})["id"]
-                transformed_data = transform(row, schema, metadata=mdata)
+                with singer.metrics.record_counter(stream.tap_stream_id) as counter:
+                    for row in tap_data:
+                        # Type Conversation and Transformation
+                        transformed_data = transform(row, schema, metadata=mdata)
 
-                # write one or more rows to the stream:
-                singer.write_records(stream.tap_stream_id, [transformed_data])
-                counter.increment()
-                bookmark = max([bookmark, row[bookmark_column]])
+                        # write one or more rows to the stream:
+                        singer.write_records(stream.tap_stream_id, [transformed_data])
+                        counter.increment()
+                        bookmark = max([bookmark, int(row[bookmark_column])])
+                if not tap_data:
+                    break
 
-        # if there is data, then only we will print state
-        if tap_data:
-            state = singer.write_bookmark(state, stream.tap_stream_id, bookmark_column, bookmark)
-            singer.write_state(state)
-        else:
-            # if no data available
-            break
+        # Write state after fetching all the messages among all the channels.
+        bookmark = time_snowflake(current_datetime_before_fetch_messages)
+        state = singer.write_bookmark(state, stream.tap_stream_id, bookmark_column, bookmark)
+        singer.write_state(state)
+    else:
+        bookmark = start_id
+        while True:
+            attr["after"] = bookmark
+            LOGGER.info("Querying Date --> %s", snowflake_time(bookmark))
+            tap_data = request_data(config, attr, headers, endpoint)
+
+            with singer.metrics.record_counter(stream.tap_stream_id) as counter:
+                for row in tap_data:
+                    # Type Conversation and Transformation
+                    if stream.tap_stream_id == "guild_members":
+                        row["id"] = row.get("user", {})["id"]
+                    transformed_data = transform(row, schema, metadata=mdata)
+
+                    # write one or more rows to the stream:
+                    singer.write_records(stream.tap_stream_id, [transformed_data])
+                    counter.increment()
+                    bookmark = max([bookmark, int(row[bookmark_column])])
+
+            # if there is data, then only we will print state
+            if tap_data:
+                state = singer.write_bookmark(state, stream.tap_stream_id, bookmark_column, bookmark)
+                singer.write_state(state)
+            else:
+                # if no data available
+                break
 
 
 def sync_full_table(config, state, stream):
