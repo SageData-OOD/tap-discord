@@ -1,0 +1,272 @@
+{
+    "type": ["null", "object"],
+    "additionalProperties": false,
+    "properties": {
+          "id": {
+              "type": ["null", "string"]
+          },
+          "name": {
+              "type": ["null", "string"]
+          },
+          "icon": {
+              "type": ["null", "string"]
+          },
+          "icon_hash": {
+              "type": ["null", "string"]
+          },
+          "description": {
+              "type": ["null", "string"]
+          },
+          "splash": {
+              "type": ["null", "string"]
+          },
+          "discovery_splash": {
+              "type": ["null", "string"]
+          },
+          "approximate_member_count": {
+              "type": ["null", "integer"]
+          },
+          "approximate_presence_count": {
+              "type": ["null", "integer"]
+          },
+          "features": {
+              "type": ["null", "array"],
+              "items": {
+                  "type": ["null", "string"]
+              }
+          },
+          "emojis": {
+              "type": ["null", "array"],
+              "items": {
+              "type": ["null", "object"],
+              "properties": {
+                "additionalProperties": false,
+                "id": {
+                  "type": ["null", "string"]
+                },
+                "name": {
+                  "type": ["null", "string"]
+                },
+                "roles": {
+                  "type": ["null", "array"],
+                  "items": {
+                      "type": ["null", "string"]
+                  }
+                },
+                "user": {
+                  "type": ["null", "object"],
+                  "additionalProperties": true,
+                  "properties": {}
+                },
+                "require_colons": {
+                  "type": ["null", "boolean"]
+                },
+                "managed": {
+                  "type": ["null", "boolean"]
+                },
+                "animated": {
+                  "type": ["null", "boolean"]
+                },
+                "available": {
+                  "type": ["null", "boolean"]
+                }
+              }
+          }
+          },
+          "banner": {
+              "type": ["null", "string"]
+          },
+          "owner": {
+              "type": ["null", "boolean"]
+          },
+          "owner_id": {
+              "type": ["null", "string"]
+          },
+          "application_id": {
+              "type": ["null", "string"]
+          },
+          "region": {
+              "type": ["null", "string"]
+          },
+          "afk_channel_id": {
+              "type": ["null", "string"]
+          },
+          "afk_timeout": {
+              "type": ["null", "integer"]
+          },
+          "system_channel_id": {
+              "type": ["null", "string"]
+          },
+          "widget_enabled": {
+              "type": ["null", "boolean"]
+          },
+          "widget_channel_id": {
+              "type": ["null", "string"]
+          },
+          "verification_level": {
+              "type": ["null", "integer"]
+          },
+          "roles": {
+              "type": ["null", "array"],
+              "items": {
+              "type": ["null", "object"],
+              "properties": {
+                "additionalProperties": false,
+                "id": {
+                  "type": ["null", "string"]
+                },
+                "name": {
+                  "type": ["null", "string"]
+                },
+                "color": {
+                  "type": ["null", "integer"]
+                },
+                "hoist": {
+                  "type": ["null", "boolean"]
+                },
+                "icon": {
+                  "type": ["null", "boolean"]
+                },
+                "unicode_emoji": {
+                  "type": ["null", "boolean"]
+                },
+                "position": {
+                  "type": ["null", "integer"]
+                },
+                "permissions": {
+                  "type": ["null", "string"]
+                },
+                "managed": {
+                  "type": ["null", "boolean"]
+                },
+                "mentionable": {
+                  "type": ["null", "boolean"]
+                },
+                "tags": {
+                  "type": ["null", "object"],
+                  "additionalProperties": true,
+                  "properties": {}
+                }
+              }
+          }
+          },
+          "default_message_notifications": {
+              "type": ["null", "integer"]
+          },
+          "mfa_level": {
+              "type": ["null", "integer"]
+          },
+          "explicit_content_filter": {
+              "type": ["null", "integer"]
+          },
+          "max_presences": {
+              "type": ["null", "integer"]
+          },
+          "max_members": {
+              "type": ["null", "integer"]
+          },
+          "max_video_channel_users": {
+              "type": ["null", "integer"]
+          },
+          "vanity_url_code": {
+              "type": ["null", "string"]
+          },
+          "premium_tier": {
+              "type": ["null", "integer"]
+          },
+          "premium_subscription_count": {
+              "type": ["null", "integer"]
+          },
+          "system_channel_flags": {
+              "type": ["null", "integer"]
+          },
+          "preferred_locale": {
+              "type": ["null", "string"]
+          },
+          "rules_channel_id": {
+              "type": ["null", "string"]
+          },
+          "public_updates_channel_id": {
+              "type": ["null", "string"]
+          },
+          "unavailable": {
+              "type": ["null", "boolean"]
+          },
+           "voice_states": {
+               "type": ["null", "array"],
+                  "items": {
+                      "type": ["null", "object"],
+                      "additionalProperties": true,
+                      "properties": {}
+                  }
+           },
+           "nsfw_level":{
+              "type": ["null", "integer"]
+           },
+           "premium_progress_bar_enabled":{
+              "type": ["null", "boolean"]
+           },
+           "stickers": {
+               "type": ["null", "array"],
+                  "items": {
+                      "type": ["null", "object"],
+                      "additionalProperties": true,
+                      "properties": {}
+                  }
+           },
+           "member_count":{
+              "type": ["null", "integer"]
+           },
+           "channels": {
+               "type": ["null", "array"],
+                  "items": {
+                      "type": ["null", "object"],
+                      "additionalProperties": true,
+                      "properties": {}
+                  }
+           },
+           "members": {
+               "type": ["null", "array"],
+                  "items": {
+                      "type": ["null", "object"],
+                      "additionalProperties": true,
+                      "properties": {}
+                  }
+           },
+           "threads": {
+               "type": ["null", "array"],
+                  "items": {
+                      "type": ["null", "object"],
+                      "additionalProperties": true,
+                      "properties": {}
+                  }
+           },
+           "joined_at":{
+              "type": ["null", "string"],
+			  "format": "date-time"
+           },
+           "large":{
+              "type": ["null", "boolean"]
+           },
+           "stage_instances": {
+               "type": ["null", "array"],
+                  "items": {
+                      "type": ["null", "object"],
+                      "additionalProperties": true,
+                      "properties": {}
+                  }
+           },
+           "presences": {
+               "type": ["null", "array"],
+                  "items": {
+                      "type": ["null", "object"],
+                      "additionalProperties": true,
+                      "properties": {}
+                  }
+           },
+           "permissions":{
+              "type": ["null", "string"]
+           }
+    }
+}
+

@@ -1,0 +1,99 @@
+{
+    "type": ["null", "object"],
+    "additionalProperties": false,
+    "properties": {
+       "id":{
+          "type":["null", "string"]
+       },
+       "type":{
+          "type":["null", "integer"]
+       },
+       "guild_id":{
+          "type":["null", "string"]
+       },
+       "position":{
+          "type":["null", "integer"]
+       },
+       "permission_overwrites": {
+           "type": ["null", "array"],
+              "items": {
+                  "type": ["null", "object"],
+                  "additionalProperties": true,
+                  "properties": {}
+              }
+       },
+       "name":{
+          "type":["null", "string"]
+       },
+       "topic":{
+          "type":["null", "string"]
+       },
+       "nsfw":{
+          "type":["null", "boolean"]
+       },
+       "last_message_id":{
+          "type":["null", "string"]
+       },
+       "bitrate":{
+          "type":["null", "integer"]
+       },
+       "user_limit":{
+          "type":["null", "integer"]
+       },
+       "rate_limit_per_user":{
+          "type":["null", "integer"]
+       },
+       "recipients":{
+           "type": ["null", "array"],
+              "items": {
+                  "type": ["null", "object"],
+                  "additionalProperties": true,
+                  "properties": {}
+              }
+       },
+       "icon":{
+          "type":["null", "string"]
+       },
+       "owner_id":{
+          "type":["null", "string"]
+       },
+       "application_id":{
+          "type":["null", "string"]
+       },
+       "parent_id":{
+          "type":["null", "string"]
+       },
+       "last_pin_timestamp":{
+          "type":["null", "string"],
+          "format": "date-time"
+       },
+       "rtc_region":{
+          "type":["null", "string"]
+       },
+       "video_quality_mode":{
+          "type":["null", "integer"]
+       },
+       "message_count":{
+          "type":["null", "integer"]
+       },
+       "member_count":{
+          "type":["null", "integer"]
+       },
+       "thread_metadata": {
+           "type": ["null", "object"],
+           "additionalProperties": true,
+           "properties": {}
+       },
+       "member": {
+           "type": ["null", "object"],
+           "additionalProperties": true,
+           "properties": {}
+       },
+       "default_auto_archive_duration":{
+          "type":["null", "integer"]
+       },
+       "permissions":{
+          "type":["null", "string"]
+       }
+    }
+}

@@ -1,0 +1,158 @@
+{
+    "type": ["null", "object"],
+    "additionalProperties": false,
+    "properties": {
+        "id":{
+            "type":["null", "string"]
+        },
+        "channel_id":{
+            "type":["null", "string"]
+        },
+        "guild_id":{
+            "type":["null", "string"]
+        },
+        "author": {
+           "type": ["null", "object"],
+           "additionalProperties": true,
+           "properties": {}
+        },
+        "member": {
+           "type": ["null", "object"],
+           "additionalProperties": true,
+           "properties": {}
+        },
+        "content":{
+            "type":["null", "string"]
+        },
+        "timestamp":{
+            "type":["null", "string"],
+            "format": "date-time"
+        },
+        "edited_timestamp":{
+            "type":["null", "string"],
+            "format": "date-time"
+        },
+        "tts":{
+            "type":["null", "boolean"]
+        },
+        "mention_everyone":{
+            "type":["null", "boolean"]
+        },
+        "mentions": {
+           "type": ["null", "array"],
+              "items": {
+
+              }
+        },
+        "mention_roles": {
+           "type": ["null", "array"],
+              "items": {
+                  "type": ["null", "string"]
+              }
+        },
+        "mention_channels": {
+           "type": ["null", "array"],
+              "items": {
+                  "type": ["null", "object"],
+                  "additionalProperties": true,
+                  "properties": {}
+              }
+        },
+        "attachments": {
+           "type": ["null", "array"],
+              "items": {
+                  "type": ["null", "object"],
+                  "additionalProperties": true,
+                  "properties": {}
+              }
+        },
+        "embeds": {
+           "type": ["null", "array"],
+              "items": {
+                  "type": ["null", "object"],
+                  "additionalProperties": true,
+                  "properties": {}
+              }
+        },
+        "reactions": {
+           "type": ["null", "array"],
+              "items": {
+                  "type": ["null", "object"],
+                  "additionalProperties": true,
+                  "properties": {}
+              }
+        },
+        "nonce":{
+            "type":["null", "integer"]
+        },
+        "pinned":{
+            "type":["null", "boolean"]
+        },
+        "webhook_id":{
+            "type":["null", "string"]
+        },
+        "type":{
+            "type":["null", "integer"]
+        },
+        "activity": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {}
+        },
+        "application": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {}
+        },
+        "application_id":{
+            "type":["null", "string"]
+        },
+        "message_reference": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {}
+        },
+        "flags":{
+            "type":["null", "integer"]
+        },
+        "referenced_message": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {}
+        },
+        "interaction": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {}
+        },
+        "thread": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {}
+        },
+        "components": {
+           "type": ["null", "array"],
+              "items": {
+                  "type": ["null", "object"],
+                  "additionalProperties": true,
+                  "properties": {}
+              }
+        },
+        "sticker_items": {
+           "type": ["null", "array"],
+              "items": {
+                  "type": ["null", "object"],
+                  "additionalProperties": true,
+                  "properties": {}
+              }
+        },
+        "stickers": {
+           "type": ["null", "array"],
+              "items": {
+                  "type": ["null", "object"],
+                  "additionalProperties": true,
+                  "properties": {}
+              }
+        }
+    }
+}

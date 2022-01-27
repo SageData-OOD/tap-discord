@@ -1,0 +1,50 @@
+{
+    "type": ["null", "object"],
+    "additionalProperties": false,
+    "properties": {
+        "id": {
+            "type":["null", "string"]
+        },
+        "user": {
+           "type": ["null", "object"],
+           "additionalProperties": true,
+           "properties": {}
+        },
+        "nick":{
+            "type":["null", "string"]
+        },
+        "avatar":{
+            "type":["null", "string"]
+        },
+        "roles": {
+            "type": ["null", "array"],
+            "items": {
+                "type": ["null", "string"]
+            }
+        },
+        "joined_at":{
+            "type":["null", "string"],
+            "format": "date-time"
+        },
+        "premium_since":{
+            "type":["null", "string"],
+            "format": "date-time"
+        },
+        "deaf":{
+            "type":["null", "boolean"]
+        },
+        "mute":{
+            "type":["null", "boolean"]
+        },
+        "pending":{
+            "type":["null", "boolean"]
+        },
+        "permissions":{
+            "type":["null", "string"]
+        },
+        "communication_disabled_until":{
+            "type":["null", "string"],
+            "format": "date-time"
+        }
+    }
+}
