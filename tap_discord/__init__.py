@@ -162,6 +162,10 @@ def request_data(config, attr, headers, endpoint, channel_id=None):
     response = requests.get(url, headers=headers)
     if response.status_code == 429:
         raise DiscordRateLimitError(response.text)
+    # Silently swallow missing access errors
+    elif response.status_code == 403:
+        LOGGER.warning(response.text)
+        return []
     elif response.status_code != 200:
         raise Exception(response.text)
     data = response.json()
