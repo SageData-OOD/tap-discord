@@ -17,8 +17,44 @@
               },
               "email": {
                 "type": ["null", "string"]
+              },
+             "discriminator": {
+                "type": ["null", "string"]
+              },
+             "avatar": {
+                "type": ["null", "string"]
+              },
+             "bot": {
+                "type": ["null", "boolean"]
+              },
+             "system": {
+                "type": ["null", "boolean"]
+              },
+             "mfa_enabled": {
+                "type": ["null", "boolean"]
+              },
+             "banner": {
+                "type": ["null", "string"]
+              },
+             "accent_color": {
+                "type": ["null", "integer"]
+              },
+             "locale": {
+                "type": ["null", "string"]
+              },
+             "verified": {
+                "type": ["null", "boolean"]
+              },
+             "flags": {
+                "type": ["null", "integer"]
+              },
+             "premium_type": {
+                "type": ["null", "integer"]
+              },
+             "public_flags": {
+                "type": ["null", "integer"]
               }
-            }
+           }
         },
         "nick":{
             "type":["null", "string"]
